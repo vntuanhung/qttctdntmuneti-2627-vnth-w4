@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài tập Tuần 04 - QTTCTDNTM</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#000;font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+header{background:#000;color:#fff;padding:26px 16px;text-align:center}
+header h1{margin:0;font-size:25px}
+header p{margin:6px 0 0;font-size:14px;color:#ddd}
+main{max-width:860px;margin:0 auto;padding:20px 16px 90px}
+.box{border:2px solid #000;padding:14px 16px;margin:16px 0}
+.box h2{margin:0 0 8px;font-size:19px}
+.f{display:block;margin:12px 0 4px;font-weight:bold;font-size:14px}
+input[type=text],select{border:2px solid #000;background:#fff;color:#000;padding:9px;font-size:15px}
+.login input,.login select{width:100%;font-size:16px;padding:10px}
+input:disabled,select:disabled{background:#eee;color:#000}
+input:focus,select:focus,button:focus{outline:3px solid #000;outline-offset:2px}
+button{background:#000;color:#fff;border:2px solid #000;padding:12px 26px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:14px}
+button.w{background:#fff;color:#000;padding:7px 14px;font-size:14px;margin:4px 4px 0 0}
+button:disabled{opacity:.4;cursor:default}
+#lmsg{font-weight:bold;margin:10px 0 0;min-height:22px}
+.q{border:2px solid #000;padding:14px 16px;margin:16px 0}
+.q h3{margin:0 0 6px;font-size:17px}
+.tag{font-size:12px;border:1px solid #000;padding:1px 7px;margin-left:8px;font-weight:normal}
+.sc{font-size:13px;float:right;border:1px solid #000;padding:1px 8px}
+.q p{margin:6px 0}
+.tw{overflow-x:auto;margin:8px 0}
+table{border-collapse:collapse;font-size:14px;min-width:60%}
+th,td{border:1px solid #000;padding:5px 9px;text-align:left}
+th{background:#000;color:#fff}
+td.n{text-align:right;white-space:nowrap}
+.ans{margin-top:10px;border-top:1px dashed #000;padding-top:8px}
+.row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.row label{flex:1 1 300px;font-size:14px}
+.row input[type=text]{width:130px}
+.fb{display:none;font-size:13px;width:100%}
+.rv .fb{display:block}
+.ok{font-weight:bold}
+.bad{text-decoration:underline;font-weight:bold}
+.how{display:none;font-size:13px;border-left:4px solid #000;padding:4px 10px;margin-top:8px}
+.rv .how{display:block}
+.how ul{margin:4px 0;padding-left:18px}
+.info{display:flex;flex-wrap:wrap;gap:6px 20px;border:2px solid #000;padding:10px 14px;font-size:14px}
+#sum{display:none;background:#000;color:#fff}
+#sum h2,#sum p{color:#fff;margin:4px 0}
+.bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:3px solid #000;padding:10px 16px;text-align:center;z-index:5}
+.bar button{margin:0 0 0 10px}
+#demo{background:#eee;border-style:dashed}
+</style>
+</head>
+<body>
+<header><h1>Bài tập Tuần 04 - QTTCTDNTM</h1><p>Quản trị tài chính trong doanh nghiệp thương mại · Phân tích đòn bẩy · 30 câu điền đáp án</p></header>
+<main>
+
+<section id="vLogin">
+ <div class="box login">
+  <h2>Đăng nhập</h2>
+  <p>Nhập đúng Họ và tên, Mã sinh viên và Lớp học phần để vào làm bài. Bài gồm <b>30 câu</b> điền đáp án, mỗi câu 1 điểm (điểm của câu được chia đều cho các ô trả lời trong câu). Bạn sẽ chỉ được tính điểm trong <b>lần làm bài đầu tiên</b>; điểm và đáp án chỉ hiển thị sau khi nộp bài.</p>
+  <p id="dl"><b>Đang kết nối máy chủ...</b></p>
+  <label class="f" for="hten">Họ và tên</label><input type="text" id="hten" autocomplete="off">
+  <label class="f" for="msv">Mã sinh viên</label><input type="text" id="msv" autocomplete="off" inputmode="numeric">
+  <label class="f" for="lop">Lớp học phần</label><select id="lop"><option value="">-- Chọn lớp học phần --</option></select>
+  <button id="go" disabled>Đăng nhập</button>
+  <p id="lmsg"></p>
+ </div>
+</section>
+<section id="vTest" style="display:none">
+ <div class="info" id="info"></div>
+ <div class="box" id="intro"><b>Hướng dẫn:</b> 1 năm = 360 ngày; thuế suất thuế TNDN 20% nếu đề không nêu khác; kết quả làm tròn 2 chữ số thập phân (EPS làm tròn đến đồng). Nhập số bằng dấu phẩy hoặc dấu chấm thập phân đều được (ví dụ 1,89 hoặc 1.89), không cần ghi đơn vị. Ô có nhiều giá trị: điền theo thứ tự trong nhãn. Bài làm tự động được lưu tạm trên trình duyệt; nộp xong không sửa được.</div>
+ <div class="box" id="sum"></div>
+ <div id="qs"></div>
+</section>
+</main>
+<div class="bar" id="bar" style="display:none"><span id="st"></span><button id="sub">Nộp bài</button></div>
+<script>
+var ENDPOINT="DÁN_LINK_APPS_SCRIPT_VÀO_ĐÂY";
+function api(action,p){
+ if(ENDPOINT.indexOf('http')!==0)return Promise.reject(new Error('no endpoint'));
+ if(action==='config')return fetch(ENDPOINT+'?action=config').then(function(r){return r.json();});
+ return fetch(ENDPOINT,{method:'POST',body:JSON.stringify(Object.assign({action:action},p||{}))}).then(function(r){return r.json();});
+}
+
+
+function $(i){return document.getElementById(i);}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function fm(x){return String(x).replace('.',',');}
+var S={u:null,qs:[],teacher:false,CFG:null,review:null};
+function view(v){$('vLogin').style.display=v==='login'?'block':'none';$('vTest').style.display=v==='test'?'block':'none';window.scrollTo(0,0);}
+function msg(t){$('lmsg').textContent=t||'';}
+function loadCfg(){
+ $('dl').innerHTML='<b>Đang kết nối máy chủ...</b>';
+ api('config').then(function(c){
+  if(!c||!c.ok)throw 0;S.CFG=c;
+  var t='Hạn nộp bài: '+(c.deadlineText||'chưa đặt hạn')+'. ';t+=c.closed?(c.reason==='closed'?'Bài tập đã được giảng viên đóng.':'Đã hết hạn nộp bài.'):'Hiện đang mở.';
+  $('dl').innerHTML='<b>'+esc(t)+'</b>';
+  var s=$('lop');s.innerHTML='';s.appendChild(new Option('-- Chọn lớp học phần --',''));(c.classes||[]).forEach(function(x){s.appendChild(new Option(x,x));});
+  $('go').disabled=false;
+ }).catch(function(){$('dl').innerHTML='<b>Không kết nối được máy chủ. Kiểm tra mạng rồi tải lại trang.</b>';});
+}
+function renderQs(review){
+ var h='',R=S.review;
+ S.qs.forEach(function(q,qi){
+  h+='<div class="q'+(review?' rv':'')+'" id="q'+qi+'"><h3>Câu '+(qi+1)+'<span class="tag">'+esc(q.topic)+'</span>'+(review?'<span class="sc">'+fm(R.res.pq[qi])+'/1 điểm</span>':'')+'</h3>';
+  q.stem.forEach(function(it){
+   if(it.p!==undefined)h+='<p>'+esc(it.p)+'</p>';
+   else{var t=it.t;h+='<div class="tw"><table><tr>'+t.h.map(function(c){return '<th>'+esc(c)+'</th>';}).join('')+'</tr>'+t.r.map(function(r){return '<tr>'+r.map(function(c){return '<td'+(/^[\d.,%]+$/.test(c)?' class="n"':'')+'>'+esc(c)+'</td>';}).join('')+'</tr>';}).join('')+'</table></div>';}
+  });
+  h+='<div class="ans">';
+  q.blanks.forEach(function(b,bi){
+   h+='<div class="row"><label>('+String.fromCharCode(97+bi)+') '+esc(b.label)+'</label>';
+   var mine=review?((R.mine[qi]&&R.mine[qi][bi])||[]):[];
+   if(b.k==='c'){
+    h+='<select id="i'+qi+'_'+bi+'_0"'+(review?' disabled':'')+'><option value="">-- chọn --</option>'+b.opts.map(function(o,j){return '<option value="'+j+'"'+(review&&String(mine[0])===String(j)?' selected':'')+'>'+esc(o)+'</option>';}).join('')+'</select>';
+   }else{
+    for(var k=0;k<b.n;k++)h+='<input type="text" id="i'+qi+'_'+bi+'_'+k+'" autocomplete="off" inputmode="decimal" placeholder="'+(b.n>1?('giá trị '+(k+1)):'đáp án')+'"'+(review?' disabled value="'+esc(mine[k]===undefined?'':mine[k])+'"':'')+'>';
+   }
+   if(review){var g=R.res.flags[qi][bi];h+='<div class="fb '+(g?'ok':'bad')+'">'+(g?'✓ Đúng: ':'✗ Sai. Đáp án đúng: ')+esc(R.res.show[qi][bi])+'</div>';}
+   h+='</div>';
+  });
+  h+='</div>';
+  if(review)h+='<div class="how"><b>Cách làm:</b><ul>'+R.steps[qi].map(function(s){return '<li>'+esc(s)+'</li>';}).join('')+'</ul></div>';
+  h+='</div>';
+ });
+ $('qs').innerHTML=h;
+}
+function collect(){return S.qs.map(function(q,qi){return q.blanks.map(function(b,bi){var n=b.k==='c'?1:b.n,a=[];for(var k=0;k<n;k++)a.push($('i'+qi+'_'+bi+'_'+k).value);return a;});});}
+function countFilled(a){var f=0,t=0;a.forEach(function(q){q.forEach(function(b){t++;if(b.every(function(x){return String(x).trim()!=='';}))f++;});});return [f,t];}
+function dkey(){return 'dr4b_'+S.u.msv;}
+var dt=null;
+function onInput(ev){if(S.mode!=='work'||!ev.target.closest||!ev.target.closest('#qs'))return;var a=collect(),c=countFilled(a);$('st').textContent='Đã điền '+c[0]+'/'+c[1]+' ô';clearTimeout(dt);dt=setTimeout(function(){try{localStorage.setItem(dkey(),JSON.stringify(a));}catch(e){}},400);}
+document.addEventListener('input',onInput);document.addEventListener('change',onInput);
+function restore(){try{var d=JSON.parse(localStorage.getItem(dkey())||'null');if(!d)return;S.qs.forEach(function(q,qi){q.blanks.forEach(function(b,bi){var v=(d[qi]&&d[qi][bi])||[],n=b.k==='c'?1:b.n;for(var k=0;k<n;k++){var e=$('i'+qi+'_'+bi+'_'+k);if(e&&v[k]!==undefined)e.value=v[k];}});});}catch(e){}}
+function infoBar(){$('info').innerHTML='<span><b>Họ và tên:</b> '+esc(S.u.name)+'</span><span><b>MSSV:</b> '+esc(S.u.msv)+'</span><span><b>Lớp:</b> '+esc(S.u.lop)+'</span>'+(S.teacher?'<span><b>Chế độ giảng viên</b>: được làm lại nhiều lần</span>':'');}
+function enterTest(r){
+ S.mode='work';S.qs=r.qs;S.review=null;infoBar();$('sum').style.display='none';$('intro').style.display='block';
+ renderQs(false);restore();$('bar').style.display='block';$('sub').disabled=false;var c=countFilled(collect());$('st').textContent='Đã điền '+c[0]+'/'+c[1]+' ô';view('test');
+}
+function enterReview(r){
+ S.mode='review';S.qs=r.qs;S.review=r;infoBar();$('intro').style.display='none';$('bar').style.display='none';
+ renderQs(true);
+ var s=$('sum');s.style.display='block';
+ s.innerHTML='<h2>Kết quả của '+esc(r.name)+'</h2><p style="font-size:22px"><b>'+fm(r.score)+'/'+r.total+' điểm</b> (quy đổi thang 10: <b>'+fm(r.scale10)+'</b>)</p><p>Đúng hoàn toàn '+r.full+'/'+r.nq+' câu; '+r.bo+'/'+r.bt+' ô trả lời đúng. Bài làm đã được ghi nhận cho giảng viên và điểm được tính theo lần làm bài đầu tiên.</p>'+(S.teacher?'<button class="w" id="again">Làm bài mới (giảng viên)</button>':'');
+ if(S.teacher)$('again').onclick=function(){doLogin(true);};
+ view('test');
+}
+function doLogin(again){
+ var name=again&&S.u?S.u.name:$('hten').value.trim(),msv=again&&S.u?S.u.msv:$('msv').value.trim(),lop=again&&S.u?S.u.lop:$('lop').value;
+ if(!name||!msv||!lop){msg('Vui lòng nhập đủ Họ và tên, Mã sinh viên và chọn Lớp học phần.');return;}
+ $('go').disabled=true;msg('Đang kiểm tra thông tin...');
+ api('login',{name:name,msv:msv,lop:lop}).then(function(r){
+  $('go').disabled=false;
+  if(!r||!r.ok){msg((r&&r.msg)||'Thông tin không hợp lệ.');if(again)view('login');return;}
+  S.u={name:r.name,msv:msv,lop:lop};S.teacher=!!r.teacher;
+  if(r.mode==='locked'){msg('Đã hết hạn nộp bài và bạn chưa nộp bài nên không thể làm bài.');return;}
+  msg('');if(r.mode==='work')enterTest(r);else enterReview(r);
+ }).catch(function(){$('go').disabled=false;msg('Lỗi kết nối. Vui lòng thử lại.');});
+}
+$('go').onclick=function(){doLogin(false);};
+$('sub').onclick=function(){
+ if(S.mode!=='work')return;
+ var a=collect(),c=countFilled(a),n=c[1]-c[0];
+ if(!confirm('Bạn chỉ được nộp bài MỘT LẦN'+(S.teacher?' (giảng viên được làm lại)':'')+', nộp xong không thể sửa.'+(n>0?'\nCòn '+n+' ô chưa điền.':'')+'\nXác nhận nộp bài?'))return;
+ $('sub').disabled=true;$('st').textContent='Đang nộp bài...';
+ api('submit',{name:S.u.name,msv:S.u.msv,lop:S.u.lop,answers:a}).then(function(r){
+  if(r&&r.ok){try{localStorage.removeItem(dkey());}catch(e){}r.teacher=S.teacher;enterReview(r);return;}
+  $('sub').disabled=false;$('st').textContent=(r&&r.msg)||'Nộp bài chưa thành công.';
+  if(r&&r.code==='closed'){$('bar').style.display='none';view('login');msg(r.msg);loadCfg();}
+ }).catch(function(){$('sub').disabled=false;$('st').textContent='Lỗi kết nối, bài CHƯA được nộp. Hãy bấm Nộp bài lại.';});
+};
+loadCfg();
+</script>
+</body>
+</html>
