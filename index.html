@@ -76,7 +76,7 @@ td.n{text-align:right;white-space:nowrap}
 </main>
 <div class="bar" id="bar" style="display:none"><span id="st"></span><button id="sub">Nộp bài</button></div>
 <script>
-var ENDPOINT="DÁN_LINK_APPS_SCRIPT_VÀO_ĐÂY";
+var ENDPOINT="https://script.google.com/macros/s/AKfycbxX4XNEY1CuGD_-Xr6SnC_pkigvrPhVOlZPx_Txl5GsUI-B8IlpEvPJ8E3V-IQCxh-5/exec";
 function api(action,p){
  if(ENDPOINT.indexOf('http')!==0)return Promise.reject(new Error('no endpoint'));
  if(action==='config')return fetch(ENDPOINT+'?action=config').then(function(r){return r.json();});
